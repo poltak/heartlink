@@ -1,10 +1,11 @@
 import os
+import thread
 import re
 import time
 import usb.core
 
-RESTING_HEART_RATE_RANGE = [40,100]
-ERRATIC_HEART_RATE_RANGE = [100,160]
+RESTING_HEART_RATE_RANGE = [40,120]
+ERRATIC_HEART_RATE_RANGE = [121,160]
 
 STOP = [0,0]
 
@@ -167,6 +168,8 @@ def isErraticHeartRate(heartRate):
     """
     if ERRATIC_HEART_RATE_RANGE[0] <= heartRate <= ERRATIC_HEART_RATE_RANGE[1]:
         return True
+    else:
+        return False
 
 
 def notifyDashboard():
@@ -179,31 +182,20 @@ def notifyDashboard():
 
 
 def grumpyBot():
-    robotArmLight(1)
-    time.sleep(0.5)
-    robotArmLight(0)
-    time.sleep(0.5)
-    robotArmLight(1)
-    time.sleep(0.5)
-    robotArmLight(0)
-    time.sleep(0.5)
-    robotArmLight(1)
-    time.sleep(0.5)
-    robotArmLight(0)
-    robotArmGrip_open(1)
-    robotArmGrip_close(0)
-    time.sleep(1)
-    robotArmWrist(-1,1)
-    robotArmWrist(1, 0)
-    time.sleep(1)
-    robotArmElbow(-1,1)
-    robotArmElbow(1, 0)
-    time.sleep(1)
-    robotArmShoulder(-1,1)
-    robotArmShoulder(1, 0)
-    time.sleep(1)
-    robotArmBase(-1,1)
-    robotArmBase(1, 0)
+    try:
+        robotArmLight(1)
+        time.sleep(0.1)
+        robotArmLight(0)
+        time.sleep(0.1)
+        robotArmLight(1)
+        time.sleep(0.1)
+        robotArmLight(0)
+        time.sleep(0.1)
+        robotArmLight(1)
+        time.sleep(0.1)
+        robotArmLight(0)
+    except:
+        print 'ignore'
 
 def main():
     init_heartbeat_sensor()
@@ -211,9 +203,12 @@ def main():
 
     while True:
         currentHeartRate = parseDataString(getDataString())
-        if isErraticHeartRate(currentHeartRate):
-            grumpyBot()
-            notifyDashboard()
+        if isErraticHeartRate(int(currentHeartRate)):
+            try:
+                grumpyBot()
+                thread.start_new_thread(notifyDashboard, ())
+            except:
+                print 'no start'
 
         # TODO: send BPM to server
 
