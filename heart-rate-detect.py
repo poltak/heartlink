@@ -17,10 +17,10 @@ ELBOW_UP = [16,0]
 ELBOW_DOWN = [32,0]
 SHOULDER_UP = [64,0]
 SHOULDER_DOWN= [128,0]
- 
+
 BASE_COUNTERCLOCKWISE = [0,1]
 BASE_CLOCKWISE = [0,2]
- 
+
 duration = 1
 
 arm = None
@@ -62,7 +62,7 @@ def robotArmCommand2(cmd, light):
     c = list(cmd)
     c.append(light)
     arm.ctrl_transfer(0x40,6,0x100,0,c,1000)
- 
+
 def robotArmCommand(cmd, light, duration):
     global arm
     c = list(cmd)
@@ -72,18 +72,18 @@ def robotArmCommand(cmd, light, duration):
     c = list(STOP)
     c.append(light)
     arm.ctrl_transfer(0x40,6,0x100,0,c,1000)
- 
+
 def robotArmLight(onoff):
     robotArmCommand2(STOP,onoff)
- 
+
 def robotArmGrip_close(onoff):
     global duration
     robotArmCommand(GRIP_CLOSE,onoff,duration)
- 
+
 def robotArmGrip_open(onoff):
     global duration
     robotArmCommand(GRIP_OPEN,onoff,duration)
- 
+
 def robotArmWrist(value, onoff):
     global duration
     if int(value)>0:
@@ -91,7 +91,7 @@ def robotArmWrist(value, onoff):
     else:
         robotArmCommand(WRIST_DOWN, onoff, duration)
 #         command2(STOP, 0)
- 
+
 def robotArmElbow(value, onoff):
     global duration
     if int(value)<0:
@@ -99,7 +99,7 @@ def robotArmElbow(value, onoff):
     else:
         robotArmCommand(ELBOW_DOWN, onoff, duration)
 #         command2(STOP, 0)
- 
+
 def robotArmShoulder(value, onoff):
     global duration
     if int(value)>0:
@@ -107,7 +107,7 @@ def robotArmShoulder(value, onoff):
     else:
         robotArmCommand(SHOULDER_DOWN, onoff, duration)
 #         command2(STOP, 0)
- 
+
 def robotArmBase(value, onoff):
     global duration
     if int(value)>0:
@@ -140,7 +140,7 @@ def getDataString():
     """
     Gets the current data string from the sensor.
     """
-	global dev
+    global dev
     while True:
         dev.write(0x02, 'G1\r') # send the read command to polar user monitor
         raw_data = dev.read(ep.bEndpointAddress, 0x40, intf, 0) # read the response message
@@ -186,11 +186,11 @@ def notifyDashboard():
 def main():
     jsonFile = open("edgepoint_feed_data.json")
     jsonData = json.load(jsonFile)
-	
-	init_heartbeat_sensor()
-	print getDataString()
-	init_robot_arm()
-	robotArmActionSeries()
+
+    init_heartbeat_sensor()
+    print getDataString()
+    init_robot_arm()
+    robotArmActionSeries()
 
     # while data continues to be received
     for data in jsonData['heartrate_data']:
