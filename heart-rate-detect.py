@@ -34,9 +34,7 @@ def getDataString():
 
     dev.write(2, 'G1\r')
     a = dev.read(1,64)
-    print a.tostring()
     return a.tostring()
-    time.sleep(5)
     #pass
 
 
