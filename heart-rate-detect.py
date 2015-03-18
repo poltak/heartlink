@@ -11,17 +11,37 @@ def getDataString():
     Gets the current data string from the sensor.
     """
     os.environ["USBIP_SERVER"]='10.10.31.170'
-    dev = None
-    #dev = usb.core.find(idVendor=0x0403, idProduct=0x6001) # Polar usb heart rate monitor
+    dev = usb.core.find(idVendor=0x0403, idProduct=0x6001) # Polar usb heart rate monitor
     if dev is None:
         raise ValueError('Device not found')
 
     # begin generic usb init
     dev.set_configuration()
+	print usb.util.get_string(dev, 256, 1)
+    print usb.util.get_string(dev, 256, 2)
+    print usb.util.get_string(dev, 256, 3)
     # end generic usb init
+	
+	# begin ftdi init
+    dev.ctrl_transfer(0x40,0x00,0,0,'')
+    dev.ctrl_transfer(0x40,0x01,0,0,'')
+    dev.ctrl_transfer(0x40,0x02,0,0,'')
+    dev.ctrl_transfer(0x40,0x03,0x4138,0,'') # Set FTDI 9600 baudrate
 
-    dev.write(1, 'G1')
-    return dev.read(1, 6)
+    cfg = dev.get_active_configuration()
+    intf = cfg[(0,0)]
+    ep = intf[0]
+    # end ftdi usb init
+
+    while True:
+        dev.write(0x02, 'G1\r') # send the read command to polar user monitor
+        raw_data = dev.read(ep.bEndpointAddress, 0x40, intf, 0) # read the response message
+        if raw_data is not None:
+            string_data_array = raw_data.tostring().split(" ")
+            if len(string_data_array) == 4: # check if the packet has valid format
+                print "BPM: " + string_data_array[2]
+                return raw_data.tostring()
+        time.sleep(0.5)
 
 
 def parseDataString(dataString):
