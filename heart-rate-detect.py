@@ -1,5 +1,8 @@
 import re
 
+RESTING_HEART_RATE_RANGE = [40,100]
+ERRATIC_HEART_RATE_RANGE = [100,160]
+
 def getDataString():
     """
     Gets the current data string from the sensor.
@@ -26,7 +29,7 @@ def isErraticHeartRate(heartRate):
     """
     Checks if current heart rate given is erratic, given the set threshold.
     """
-    if heartRate >= heartRateThreshold:
+    if ERRATIC_HEART_RATE_RANGE[0] <= heartRate <= ERRATIC_HEART_RATE_RANGE[1]:
         return True
 
 
