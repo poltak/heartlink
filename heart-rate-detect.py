@@ -80,6 +80,11 @@ def main():
         if isErraticHeartRate(currentHeartRate):
             notifyDashboard()
 
+def test():
+    print 'before'
+    print getDataString()
+    print 'after'
 
 if __name__ == '__main__':
-    main()
+    #main()
+    test()
