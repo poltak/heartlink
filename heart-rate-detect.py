@@ -62,9 +62,12 @@ def main():
     # while data continues to be received
     for data in jsonData['heartrate_data']:
         currentHeartRate = data['bpm']
+        time.sleep(1)
 
         if isErraticHeartRate(currentHeartRate):
             notifyDashboard()
+        else:
+            print currentHeartRate
 
     jsonFile.close()
 
