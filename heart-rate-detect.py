@@ -185,11 +185,18 @@ def main():
     jsonData = json.load(jsonFile)
 
     init_heartbeat_sensor()
-    print getDataString()
     init_robot_arm()
-    robotArmActionSeries()
+    #robotArmActionSeries()
+
+    while True:
+        currentHeartRate = parseDataString(getDataString())
+        if isErraticHeartRate(currentHeartRate):
+            notifyDashboard()
+        else:
+            print 'no problems: %d' % currentHeartRate
 
     # while data continues to be received
+    """
     for data in jsonData['heartrate_data']:
         currentHeartRate = data['bpm']
         time.sleep(1)
@@ -200,6 +207,7 @@ def main():
             print currentHeartRate
 
     jsonFile.close()
+    """
 
 
 
