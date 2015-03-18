@@ -1,7 +1,6 @@
 import os
 import re
 import time
-import json
 import usb.core
 
 RESTING_HEART_RATE_RANGE = [40,100]
@@ -37,9 +36,6 @@ def init_heartbeat_sensor():
 
     # begin generic usb init
     dev.set_configuration()
-    print usb.util.get_string(dev, 256, 1)
-    print usb.util.get_string(dev, 256, 2)
-    print usb.util.get_string(dev, 256, 3)
     # end generic usb init
 
     # begin ftdi init
@@ -147,7 +143,6 @@ def getDataString():
         if raw_data is not None:
             string_data_array = raw_data.tostring().split(" ")
             if len(string_data_array) == 4: # check if the packet has valid format
-                print "BPM: " + string_data_array[2]
                 return raw_data.tostring()
         time.sleep(0.5)
 
@@ -183,35 +178,47 @@ def notifyDashboard():
     pass
 
 
-def main():
-    jsonFile = open("edgepoint_feed_data.json")
-    jsonData = json.load(jsonFile)
+def grumpyBot():
+    robotArmLight(1)
+    time.sleep(0.5)
+    robotArmLight(0)
+    time.sleep(0.5)
+    robotArmLight(1)
+    time.sleep(0.5)
+    robotArmLight(0)
+    time.sleep(0.5)
+    robotArmLight(1)
+    time.sleep(0.5)
+    robotArmLight(0)
+    robotArmGrip_open(1)
+    robotArmGrip_close(0)
+    time.sleep(1)
+    robotArmWrist(-1,1)
+    robotArmWrist(1, 0)
+    time.sleep(1)
+    robotArmElbow(-1,1)
+    robotArmElbow(1, 0)
+    time.sleep(1)
+    robotArmShoulder(-1,1)
+    robotArmShoulder(1, 0)
+    time.sleep(1)
+    robotArmBase(-1,1)
+    robotArmBase(1, 0)
 
+def main():
     init_heartbeat_sensor()
     init_robot_arm()
-    #robotArmActionSeries()
 
     while True:
         currentHeartRate = parseDataString(getDataString())
         if isErraticHeartRate(currentHeartRate):
+            grumpyBot()
             notifyDashboard()
-        else:
-            print 'no problems: %d' % currentHeartRate
 
-    # while data continues to be received
-    """
-    for data in jsonData['heartrate_data']:
-        currentHeartRate = data['bpm']
-        time.sleep(1)
+        # TODO: send BPM to server
 
-        if isErraticHeartRate(currentHeartRate):
-            notifyDashboard()
-        else:
-            print currentHeartRate
-
-    jsonFile.close()
-    """
-
+        # DEBUG
+        print "BPM: " + currentHeartRate
 
 
 if __name__ == '__main__':
