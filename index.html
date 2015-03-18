@@ -178,7 +178,7 @@ setInterval( function() {
   random.addData(seriesData);
   graph.update();
 
-}, 500 );
+}, 1000 );
 
 function addAnnotation(force) {
   if (messages.length > 0 && (force || Math.random() >= 0.95)) {
@@ -188,7 +188,7 @@ function addAnnotation(force) {
 }
 
 addAnnotation(true);
-setTimeout( function() { setInterval( addAnnotation, 1000 ) }, 1000 );
+setTimeout( function() { setInterval( addAnnotation, 6000 ) }, 6000 );
 
 var previewXAxis = new Rickshaw.Graph.Axis.Time({
   graph: preview.previews[0],
