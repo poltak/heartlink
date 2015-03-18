@@ -1,3 +1,4 @@
+import os
 import re
 import usb.core
 import time
@@ -13,29 +14,14 @@ def getDataString():
     os.environ["USBIP_SERVER"]='10.10.31.170'
     dev = usb.core.find(idVendor=0x0403, idProduct=0x6001) # Polar usb heart rate monitor
     if dev is None:
-        return ValueError('Device not found')
+        raise ValueError('Device not found')
 
     # begin generic usb init
     dev.set_configuration()
-    print usb.util.get_string(dev, 256, 1)
-    print usb.util.get_string(dev, 256, 2)
-    print usb.util.get_string(dev, 256, 3)
     # end generic usb init
 
-    # begin ftdi init
-    dev.ctrl_transfer(0x40, 0x3, 0x1a, 0x0)
-    dev.ctrl_transfer(0x40, 0x1, 0x202, 0x0)
-    dev.ctrl_transfer(0x40, 0x4, 0x8, 0x0)
-    dev.ctrl_transfer(0x40, 0x2, 0x0, 0x0)
-    dev.ctrl_transfer(0x40, 0x1, 0x100, 0x0)
-    dev.ctrl_transfer(0x40, 0x6, 0x11a, 0x0)
-    dev.write(2,'\r')
-    # end ftdi init
-
-    dev.write(2, 'G1\r')
-    a = dev.read(1,64)
-    return a.tostring()
-    #pass
+    dev.write(1, 'G1')
+    return dev.read(1, 6)
 
 
 def parseDataString(dataString):
@@ -68,7 +54,6 @@ def notifyDashboard():
     pass
 
 
-
 def main():
     # while data continues to be received
     while True:
@@ -78,11 +63,13 @@ def main():
         if isErraticHeartRate(currentHeartRate):
             notifyDashboard()
 
-def test():
+
+def debug():
     print 'before'
     print getDataString()
     print 'after'
 
+
 if __name__ == '__main__':
     #main()
-    test()
+    debug()
