@@ -8,7 +8,7 @@ if dev is None:
     raise ValueError('Device not found')
  
 STOP = [0,0]
- 
+
 GRIP_CLOSE = [1,0]
 GRIP_OPEN = [2,0]
 WRIST_UP = [4,0]
@@ -23,12 +23,12 @@ BASE_CLOCKWISE = [0,2]
  
 duration = 1
  
-def command2(cmd, light):
+def robotArmCommand2(cmd, light):
     c = list(cmd)
     c.append(light)
     dev.ctrl_transfer(0x40,6,0x100,0,c,1000)
  
-def command(cmd, light, duration):
+def robotArmCommand(cmd, light, duration):
     c = list(cmd)
     c.append(light)
     dev.ctrl_transfer(0x40,6,0x100,0,c,1000)
@@ -37,18 +37,18 @@ def command(cmd, light, duration):
     c.append(light)
     dev.ctrl_transfer(0x40,6,0x100,0,c,1000)
  
-def light(onoff):
+def robotArmLight(onoff):
     command2(STOP,onoff)
  
-def grip_close(onoff):
+def robotArmGrip_close(onoff):
     global duration
     command(GRIP_CLOSE,onoff,duration)
  
-def grip_open(onoff):
+def robotArmGrip_open(onoff):
     global duration
     command(GRIP_OPEN,onoff,duration)
  
-def wrist(value, onoff):
+def robotArmWrist(value, onoff):
     global duration
     if int(value)>0:
         command(WRIST_UP, onoff, duration)
@@ -56,7 +56,7 @@ def wrist(value, onoff):
         command(WRIST_DOWN, onoff, duration)
 #         command2(STOP, 0)
  
-def elbow(value, onoff):
+def robotArmElbow(value, onoff):
     global duration
     if int(value)<0:
         command(ELBOW_UP, onoff, duration)
@@ -64,7 +64,7 @@ def elbow(value, onoff):
         command(ELBOW_DOWN, onoff, duration)
 #         command2(STOP, 0)
  
-def shoulder(value, onoff):
+def robotArmShoulder(value, onoff):
     global duration
     if int(value)>0:
         command(SHOULDER_UP, onoff, duration)
@@ -72,7 +72,7 @@ def shoulder(value, onoff):
         command(SHOULDER_DOWN, onoff, duration)
 #         command2(STOP, 0)
  
-def base(value, onoff):
+def robotArmBase(value, onoff):
     global duration
     if int(value)>0:
         command(BASE_COUNTERCLOCKWISE,onoff, duration)
@@ -80,21 +80,22 @@ def base(value, onoff):
         command(BASE_CLOCKWISE, onoff, duration)
     else:
         command2(STOP, 0)
- 
-light(1)
-time.sleep(2)
-light(0)
-grip_open(1)
-grip_close(0)
-time.sleep(2)
-wrist(-1,1)
-wrist(1, 0)
-time.sleep(2)
-elbow(-1,1)
-elbow(1, 0)
-time.sleep(2)
-shoulder(-1,1)
-shoulder(1, 0)
-time.sleep(2)
-base(-1,1)
-base(1, 0)
+
+def robotArmActionSeries():
+	robotArmLight(1)
+	time.sleep(2)
+	robotArmLight(0)
+	robotArmGrip_open(1)
+	robotArmGrip_close(0)
+	time.sleep(2)
+	robotArmWrist(-1,1)
+	robotArmWrist(1, 0)
+	time.sleep(2)
+	robotArmElbow(-1,1)
+	robotArmElbow(1, 0)
+	time.sleep(2)
+	robotArmShoulder(-1,1)
+	robotArmShoulder(1, 0)
+	time.sleep(2)
+	robotArmBase(-1,1)
+	robotArmBase(1, 0)
