@@ -41,7 +41,8 @@
   <script src="src/js/Rickshaw.Color.Palette.js"></script>
   <script src="src/js/Rickshaw.Graph.Axis.Y.js"></script>
 
-  <script src="js/extensions.js"></script>
+  <script src="src/js/extensions.js"></script>
+
 </head>
 <body>
 
@@ -174,21 +175,26 @@ var messages = [
 ];
 
 setInterval( function() {
-  random.removeData(seriesData);
-  random.addData(seriesData);
+  //random.removeData(seriesData);
+  //random.addData(seriesData);
+  seriesData[0].shift();
+  console.log(seriesData[0][seriesData[0].length-1]);
+  var prev = seriesData[0][0];
+  console.log(prev.x);
+  seriesData[0][seriesData[0].length-1] = { x: (parseInt(prev.x) + 200), y: 50 };
   graph.update();
-
 }, 1000 );
 
 function addAnnotation(force) {
   if (messages.length > 0 && (force || Math.random() >= 0.95)) {
     annotator.add(seriesData[0][seriesData[0].length-1].x, messages.shift());
     annotator.update();
+    graph.update();
   }
 }
 
 addAnnotation(true);
-setTimeout( function() { setInterval( addAnnotation, 6000 ) }, 6000 );
+setTimeout( function() { setInterval( addAnnotation, 600 ) }, 600 );
 
 var previewXAxis = new Rickshaw.Graph.Axis.Time({
   graph: preview.previews[0],
