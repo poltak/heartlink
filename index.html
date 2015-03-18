@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>heartlink</title>
+</head>
+<body>
+  <script src="src/js/d3.min.js" charset="utf-8"></script>
+  <script src="src/js/rickshaw.min.js" charset="utf-8"></script>
+  <script src="src/js/Rickshaw.Graph.Renderer.Line.js" charset="utf-8"></script>
+
+
+  <div id="content">
+
+    <div id="chart_container">
+      <div id="chart"></div>
+      <div id="timeline"></div>
+      <div id="preview"></div>
+    </div>
+
+  </div>
+
+  <script>
+    // Set up our data series with 150 random data points
+    var seriesData = [ [] ];
+    var random = new Rickshaw.Fixtures.RandomData(150);
+
+    for (var i = 0; i < 150; i++) {
+      random.addData(seriesData);
+    }
+
+    var palette = new Rickshaw.Color.Palette( { scheme: 'classic9' } );
+
+    // Make graph object
+    var graph = new Rickshaw.Graph( {
+      element: document.getElementById("chart"),
+      width: 900,
+      height: 500,
+      renderer: 'line',
+      stroke: true,
+      preserve: true,
+      series: [
+        {
+          color: palette.color(),
+          data: seriesData[0],
+          name: 'Heart Rate'
+        }
+      ]
+    } );
+
+    graph.render();
+
+
+    // Add new data and refresh graph
+    setInterval( function() {
+      random.removeData(seriesData);
+      random.addData(seriesData);
+      graph.update();
+    }, 500 );
+
+    function addAnnotation(force) {
+      if (messages.length > 0 && (force || Math.random() >= 0.95)) {
+        annotator.add(seriesData[0][seriesData[0].length-1].x, messages.shift());
+        annotator.update();
+      }
+    }
+
+    addAnnotation(true);
+    setTimeout( function() { setInterval( addAnnotation, 1000 ) }, 1000 );
+
+    var previewXAxis = new Rickshaw.Graph.Axis.Time({
+      graph: preview.previews[0],
+      timeFixture: new Rickshaw.Fixtures.Time.Local(),
+      ticksTreatment: ticksTreatment
+    });
+
+    previewXAxis.render();
+
+
+  </script>
+</body>
+</html>
