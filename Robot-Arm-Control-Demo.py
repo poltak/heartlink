@@ -1,6 +1,8 @@
 import usb.core
 import time
- 
+import os
+
+os.environ["USBIP_SERVER"]='10.10.31.170'
 dev = usb.core.find(idVendor=0x1267, idProduct=0)
 if dev is None:
     raise ValueError('Device not found')
