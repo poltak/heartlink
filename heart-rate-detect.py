@@ -1,7 +1,7 @@
 import os
 import re
-import usb.core
 import time
+import json
 
 RESTING_HEART_RATE_RANGE = [40,100]
 ERRATIC_HEART_RATE_RANGE = [100,160]
@@ -9,10 +9,10 @@ ERRATIC_HEART_RATE_RANGE = [100,160]
 def getDataString():
     """
     Gets the current data string from the sensor.
-    TODO
     """
     os.environ["USBIP_SERVER"]='10.10.31.170'
-    dev = usb.core.find(idVendor=0x0403, idProduct=0x6001) # Polar usb heart rate monitor
+    dev = None
+    #dev = usb.core.find(idVendor=0x0403, idProduct=0x6001) # Polar usb heart rate monitor
     if dev is None:
         raise ValueError('Device not found')
 
@@ -51,25 +51,27 @@ def notifyDashboard():
     Sends notifcation to be displayed on the dashboard user interface.
     TODO
     """
+    print "BPM threshold exceded!"
     pass
 
 
 def main():
+    jsonFile = open("edgepoint_feed_data.json")
+    jsonData = json.load(jsonFile)
+
     # while data continues to be received
-    while True:
-        dataString = getDataString()
-        currentHeartRate = parseDataString(dataString)
+    for data in jsonData['heartrate_data']:
+        currentHeartRate = data['bpm']
+        time.sleep(1)
 
         if isErraticHeartRate(currentHeartRate):
             notifyDashboard()
+        else:
+            print currentHeartRate
 
+    jsonFile.close()
 
-def debug():
-    print 'before'
-    print getDataString()
-    print 'after'
 
 
 if __name__ == '__main__':
-    #main()
-    debug()
+    main()
