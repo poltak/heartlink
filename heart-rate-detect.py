@@ -25,8 +25,11 @@ duration = 1
 
 arm = None
 dev = None
+ep = None
+intf = None
 
 def init_heartbeat_sensor():
+    global dev, ep, intf
     os.environ["USBIP_SERVER"]='10.10.31.170'
     dev = usb.core.find(idVendor=0x0403, idProduct=0x6001) # Polar usb heart rate monitor
     if dev is None:
@@ -140,7 +143,7 @@ def getDataString():
     """
     Gets the current data string from the sensor.
     """
-    global dev
+    global dev, ep, intf
     while True:
         dev.write(0x02, 'G1\r') # send the read command to polar user monitor
         raw_data = dev.read(ep.bEndpointAddress, 0x40, intf, 0) # read the response message
