@@ -30,7 +30,7 @@ def init_heartbeat_sensor():
     os.environ["USBIP_SERVER"]='10.10.31.170'
     dev = usb.core.find(idVendor=0x0403, idProduct=0x6001) # Polar usb heart rate monitor
     if dev is None:
-        raise ValueError('Device not found')
+        raise ValueError('Heartbeat sensor not found')
 
     # begin generic usb init
     dev.set_configuration()
@@ -55,7 +55,7 @@ def init_robot_arm():
     os.environ["USBIP_SERVER"]='10.10.31.170'
     arm = usb.core.find(idVendor=0x1267, idProduct=0)
     if arm is None:
-        raise ValueError('Device not found')
+        raise ValueError('Robot arm not found')
 
 def robotArmCommand2(cmd, light):
     global arm
@@ -90,7 +90,6 @@ def robotArmWrist(value, onoff):
         robotArmCommand(WRIST_UP, onoff, duration)
     else:
         robotArmCommand(WRIST_DOWN, onoff, duration)
-#         command2(STOP, 0)
 
 def robotArmElbow(value, onoff):
     global duration
@@ -98,7 +97,6 @@ def robotArmElbow(value, onoff):
         robotArmCommand(ELBOW_UP, onoff, duration)
     else:
         robotArmCommand(ELBOW_DOWN, onoff, duration)
-#         command2(STOP, 0)
 
 def robotArmShoulder(value, onoff):
     global duration
@@ -106,7 +104,6 @@ def robotArmShoulder(value, onoff):
         robotArmCommand(SHOULDER_UP, onoff, duration)
     else:
         robotArmCommand(SHOULDER_DOWN, onoff, duration)
-#         command2(STOP, 0)
 
 def robotArmBase(value, onoff):
     global duration
