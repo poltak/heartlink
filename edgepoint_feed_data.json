@@ -1,0 +1,254 @@
+{
+	"heartrate_data": [
+		{
+			"status": 1,
+			"timestamp": 1,
+			"bpm": 78
+		},
+		{
+			"status": 1,
+			"timestamp": 2,
+			"bpm": 76
+		},
+		{
+			"status": 1,
+			"timestamp": 3,
+			"bpm": 78
+		},
+		{
+			"status": 1,
+			"timestamp": 4,
+			"bpm": 72
+		},
+		{
+			"status": 1,
+			"timestamp": 5,
+			"bpm": 73
+		},
+		{
+			"status": 1,
+			"timestamp": 6,
+			"bpm": 81
+		},
+		{
+			"status": 1,
+			"timestamp": 7,
+			"bpm": 78
+		},
+		{
+			"status": 1,
+			"timestamp": 8,
+			"bpm": 78
+		},
+		{
+			"status": 1,
+			"timestamp": 9,
+			"bpm": 78
+		},
+		{
+			"status": 1,
+			"timestamp": 10,
+			"bpm": 81
+		},
+		{
+			"status": 1,
+			"timestamp": 11,
+			"bpm": 82
+		},
+		{
+			"status": 1,
+			"timestamp": 12,
+			"bpm": 85
+		},
+		{
+			"status": 1,
+			"timestamp": 13,
+			"bpm": 88
+		},
+		{
+			"status": 1,
+			"timestamp": 14,
+			"bpm": 93
+		},
+		{
+			"status": 1,
+			"timestamp": 15,
+			"bpm": 95
+		},
+		{
+			"status": 1,
+			"timestamp": 16,
+			"bpm": 100
+		},
+		{
+			"status": 1,
+			"timestamp": 17,
+			"bpm": 103
+		},
+		{
+			"status": 1,
+			"timestamp": 18,
+			"bpm": 105 
+		},
+		{
+			"status": 1,
+			"timestamp": 19,
+			"bpm": 110
+		},
+		{
+			"status": 1,
+			"timestamp": 20,
+			"bpm": 114
+		},
+		{
+			"status": 1,
+			"timestamp": 21,
+			"bpm": 116 
+		},
+		{
+			"status": 1,
+			"timestamp": 22,
+			"bpm": 119
+		},
+		{
+			"status": 1,
+			"timestamp": 23,
+			"bpm": 123
+		},
+		{
+			"status": 1,
+			"timestamp": 24,
+			"bpm": 126
+		},
+		{
+			"status": 1,
+			"timestamp": 25,
+			"bpm": 129
+		},
+		{
+			"status": 1,
+			"timestamp": 26,
+			"bpm": 129
+		},
+		{
+			"status": 1,
+			"timestamp": 27,
+			"bpm": 128
+		},
+		{
+			"status": 1,
+			"timestamp": 28,
+			"bpm": 129
+		},
+		{
+			"status": 1,
+			"timestamp": 29,
+			"bpm": 126
+		},
+		{
+			"status": 1,
+			"timestamp": 30,
+			"bpm": 125
+		},
+		{
+			"status": 1,
+			"timestamp": 31,
+			"bpm": 126
+		},
+		{
+			"status": 1,
+			"timestamp": 32,
+			"bpm": 123
+		},
+		{
+			"status": 1,
+			"timestamp": 33,
+			"bpm": 122
+		},
+		{
+			"status": 1,
+			"timestamp": 34,
+			"bpm": 120
+		},
+		{
+			"status": 1,
+			"timestamp": 35,
+			"bpm": 116
+		},
+		{
+			"status": 1,
+			"timestamp": 36,
+			"bpm": 114
+		},
+		{
+			"status": 1,
+			"timestamp": 37,
+			"bpm": 110
+		},
+		{
+			"status": 1,
+			"timestamp": 38,
+			"bpm": 108
+		},
+		{
+			"status": 1,
+			"timestamp": 39,
+			"bpm": 106
+		},
+		{
+			"status": 1,
+			"timestamp": 40,
+			"bpm": 105
+		},
+		{
+			"status": 1,
+			"timestamp": 41,
+			"bpm": 105
+		},
+		{
+			"status": 1,
+			"timestamp": 42,
+			"bpm": 104
+		},
+		{
+			"status": 1,
+			"timestamp": 43,
+			"bpm": 103
+		},
+		{
+			"status": 1,
+			"timestamp": 44,
+			"bpm": 101
+		},
+		{
+			"status": 1,
+			"timestamp": 45,
+			"bpm": 100
+		},
+		{
+			"status": 1,
+			"timestamp": 46,
+			"bpm": 101
+		},
+		{
+			"status": 1,
+			"timestamp": 47,
+			"bpm": 97
+		},
+		{
+			"status": 1,
+			"timestamp": 48,
+			"bpm": 97
+		},
+		{
+			"status": 1,
+			"timestamp": 49,
+			"bpm": 95
+		},
+		{
+			"status": 1,
+			"timestamp": 50,
+			"bpm": 94
+		}
+	]
+}
