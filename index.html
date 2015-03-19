@@ -175,13 +175,8 @@ var messages = [
 ];
 
 setInterval( function() {
-  //random.removeData(seriesData);
-  //random.addData(seriesData);
-  seriesData[0].shift();
-  console.log(seriesData[0][seriesData[0].length-1]);
-  var prev = seriesData[0][0];
-  console.log(prev.x);
-  seriesData[0][seriesData[0].length-1] = { x: (parseInt(prev.x) + 200), y: 50 };
+  random.removeData(seriesData);
+  random.addData(seriesData);
   graph.update();
 }, 1000 );
 
